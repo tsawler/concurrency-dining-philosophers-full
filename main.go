@@ -68,7 +68,7 @@ func dine() {
 		forks[i] = &sync.Mutex{}
 	}
 
-	// start the meal by iterating through our slice of Philosophers
+	// Start the meal by iterating through our slice of Philosophers.
 	for i := 0; i < len(philosophers); i++ {
 		// fire off each philosopher's goroutine
 		go diningProblem(philosophers[i], wg, forks, seated)
@@ -87,10 +87,10 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	defer wg.Done()
 	fmt.Println(philosopher.name, "is seated at the table.")
 
-	// decrement the seated waitgroup by one.
+	// Decrement the seated waitgroup by one.
 	seated.Done()
 
-	// wait until everyone is seated.
+	// Wait until everyone is seated.
 	seated.Wait()
 
 	// We'll also define a waitgroup for this goroutine specifically, so that the "leaving table"
@@ -98,7 +98,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	eating := &sync.WaitGroup{}
 	eating.Add(hunger)
 
-	// have this philosopher eat and think "hunger"" times (3).
+	// Have this philosopher eat and think "hunger"" times (3).
 	for i := hunger; i > 0; i-- {
 		// get a lock on the left and right forks. We have to choose the lower numbered fork first in order
 		// to avoid a logical race condition, which is not detected by the -race flag in tests.
@@ -113,28 +113,28 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		fmt.Println(philosopher.name, "has both forks, and is eating.")
 		time.Sleep(eat)
 
-		// the philosopher starts to think, but does not drop the forks yet
+		// The philosopher starts to think, but does not drop the forks yet.
 		fmt.Printf("%s is thinking.\n", philosopher.name)
 		time.Sleep(think)
 
-		// unlock the mutexes for both forks
+		// Unlock the mutexes for both forks.
 		forks[philosopher.leftFork].Unlock()
 		forks[philosopher.rightFork].Unlock()
 
 		fmt.Printf("\t%s put down the forks.\n", philosopher.name)
 
-		// decrement the eating waitgroup by 1
+		// Decrement the eating waitgroup by 1.
 		eating.Done()
 	}
 
-	// wait until all messages have been printed
+	// wWit until all messages have been printed.
 	eating.Wait()
 
 	fmt.Println(philosopher.name, "is satisfied.")
 	time.Sleep(sleepTime)
 	fmt.Println(philosopher.name, "left the table.")
 
-	// update the list of finished diners
+	// Update the list of finished diners.
 	orderMutex.Lock()
 	orderFinished = append(orderFinished, philosopher.name)
 	orderMutex.Unlock()
