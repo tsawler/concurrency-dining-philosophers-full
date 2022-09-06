@@ -134,7 +134,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	time.Sleep(sleepTime)
 	fmt.Println(philosopher.name, "left the table.")
 
-	// update the list of finished eaters
+	// update the list of finished diners
 	orderMutex.Lock()
 	orderFinished = append(orderFinished, philosopher.name)
 	orderMutex.Unlock()
