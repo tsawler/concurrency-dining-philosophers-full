@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// Philosopher is a simple struct used to hold a philosopher's name, and the position of their left and
+// right fork in the map that holds the mutexes for those forks.
 type Philosopher struct {
 	name      string
 	rightFork int
