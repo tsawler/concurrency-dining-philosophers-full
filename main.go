@@ -13,6 +13,9 @@ type Philosopher struct {
 	leftFork  int
 }
 
+// philosophers is our list of philosophers. We define their name, assign a left and right fork using ints that
+// match the map of forks. Note that each philosopher shares one fork with the person next to them (five philsophers,
+// and five forks).
 var philosophers = []Philosopher{
 	{name: "Plato", leftFork: 4, rightFork: 0},
 	{name: "Socrates", leftFork: 0, rightFork: 1},
@@ -28,8 +31,6 @@ var think = 3 * time.Second     // how long a philosopher thinks
 var sleepTime = 1 * time.Second // how long to wait when printing things out
 var orderFinished []string      // the order in which philosophers finish dining and leave
 var orderMutex sync.Mutex       // a mutex for the slice orderFinished
-
-// define a wait group
 
 func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*sync.Mutex, seated *sync.WaitGroup) {
 	defer wg.Done()
@@ -84,7 +85,7 @@ func main() {
 	fmt.Println("The table is empty.")
 	time.Sleep(sleepTime)
 
-	// set delays to zero while developing
+	// Uncomment the next three lines to set delays to zero while developing to speed things up.
 	eat = 0 * time.Second
 	sleepTime = 0 * time.Second
 	think = 0 * time.Second
@@ -99,13 +100,19 @@ func main() {
 	seated := &sync.WaitGroup{}
 	seated.Add(len(philosophers))
 
-	// forks is a map of all 5 forks. Forks are assigned using the fields leftFork and rightFork in the Philosopher type
-	forks := map[int]*sync.Mutex{
-		0: &sync.Mutex{},
-		1: &sync.Mutex{},
-		2: &sync.Mutex{},
-		3: &sync.Mutex{},
-		4: &sync.Mutex{},
+	// forks is a map of all 5 forks. Forks are assigned using the fields leftFork and rightFork in the Philosopher type.
+	// Yes, I know that I have a redundant type for each of the entries in the map, but I think it's just more readable.
+	// So sue me.
+	//forks := map[int]*sync.Mutex{
+	//	0: &sync.Mutex{},
+	//	1: &sync.Mutex{},
+	//	2: &sync.Mutex{},
+	//	3: &sync.Mutex{},
+	//	4: &sync.Mutex{},
+	//}
+	var forks = make(map[int]*sync.Mutex)
+	for i := 0; i < 5; i++ {
+		forks[i] = &sync.Mutex{}
 	}
 
 	// start the meal by iterating through our slice of Philosophers
