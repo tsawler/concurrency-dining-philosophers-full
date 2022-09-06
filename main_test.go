@@ -48,3 +48,13 @@ func Test_dine(t *testing.T) {
 		}
 	}
 }
+
+func Test_Main(t *testing.T) {
+	for i := 0; i < 1000; i++ {
+		orderFinished = []string{}
+		main()
+		if len(orderFinished) != 5 {
+			t.Errorf("incorrect length of slice orderFinished; expected 5 but got %d", len(orderFinished))
+		}
+	}
+}
