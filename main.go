@@ -98,7 +98,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	//eating := &sync.WaitGroup{}
 	//eating.Add(hunger)
 	// I think that I simply misread the output, since I can't duplicate the wrong order for output
-	// any more...
+	// anymore...
 
 	// Have this philosopher eat and think "hunger" times (3).
 	for i := hunger; i > 0; i-- {
