@@ -1,9 +1,6 @@
 # Concurrency in Go: The Dining Philosophers problem
 
-This version of the program produces virtually no output. The test runs one million times, so takes
-a bit to finish. 
+This version of the program is a more complete solution to the original problem, with a mutex for every fork
+on the table.
 
-Download or clone this repository, and run the test with race turned on
-
-`go test -race .`
 
