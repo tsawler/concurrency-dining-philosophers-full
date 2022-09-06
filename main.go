@@ -34,6 +34,50 @@ var sleepTime = 1 * time.Second // how long to wait when printing things out
 var orderFinished []string      // the order in which philosophers finish dining and leave
 var orderMutex sync.Mutex       // a mutex for the slice orderFinished
 
+func main() {
+	fmt.Println("Dining Philosophers Problem")
+	fmt.Println("---------------------------")
+	fmt.Println("The table is empty.")
+	time.Sleep(sleepTime)
+
+	dine()
+
+	fmt.Printf("Order finished: %s\n", strings.Join(orderFinished, ", "))
+	fmt.Println("The table is empty.")
+}
+
+func dine() {
+	// Uncomment the next three lines to set delays to zero while developing to speed things up.
+	eat = 0 * time.Second
+	sleepTime = 0 * time.Second
+	think = 0 * time.Second
+
+	// wg is the waitgroup that keeps track of how many philosophers are still at the table. When
+	// it reaches zero, everyone is finished eating and has left. We add 5 (the number of philosophers) to this
+	// wait group.
+	wg := &sync.WaitGroup{}
+	wg.Add(len(philosophers))
+
+	// we want everyone to be seated before they start eating, so create a waitgroup for that, and set it to 5.
+	seated := &sync.WaitGroup{}
+	seated.Add(len(philosophers))
+
+	// forks is a map of all 5 forks. Forks are assigned using the fields leftFork and rightFork in the Philosopher type.
+	var forks = make(map[int]*sync.Mutex)
+	for i := 0; i < 5; i++ {
+		forks[i] = &sync.Mutex{}
+	}
+
+	// start the meal by iterating through our slice of Philosophers
+	for i := 0; i < len(philosophers); i++ {
+		// fire off each philosopher's goroutine
+		go diningProblem(philosophers[i], wg, forks, seated)
+	}
+
+	// Wait for the philosophers to finish. This blocks until the wait group is 0.
+	wg.Wait()
+}
+
 // diningProblem is the function fired off as a goroutine for each of our philosophers. It takes one
 // philosopher, our waitgroup to determine when everyone is done, a map containing the mutexes for every
 // fork on the table, and a waitgroup used to pause execution of every instance of this goroutine
@@ -88,43 +132,4 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	orderMutex.Lock()
 	orderFinished = append(orderFinished, philosopher.name)
 	orderMutex.Unlock()
-}
-
-func main() {
-	fmt.Println("Dining Philosophers Problem")
-	fmt.Println("---------------------------")
-	fmt.Println("The table is empty.")
-	time.Sleep(sleepTime)
-
-	// Uncomment the next three lines to set delays to zero while developing to speed things up.
-	eat = 0 * time.Second
-	sleepTime = 0 * time.Second
-	think = 0 * time.Second
-
-	// wg is the waitgroup that keeps track of how many philosophers are still at the table. When
-	// it reaches zero, everyone is finished eating and has left. We add 5 (the number of philosophers) to this
-	// wait group.
-	wg := &sync.WaitGroup{}
-	wg.Add(len(philosophers))
-
-	// we want everyone to be seated before they start eating, so create a waitgroup for that, and set it to 5.
-	seated := &sync.WaitGroup{}
-	seated.Add(len(philosophers))
-
-	// forks is a map of all 5 forks. Forks are assigned using the fields leftFork and rightFork in the Philosopher type.
-	var forks = make(map[int]*sync.Mutex)
-	for i := 0; i < 5; i++ {
-		forks[i] = &sync.Mutex{}
-	}
-
-	// start the meal by iterating through our slice of Philosophers
-	for i := 0; i < len(philosophers); i++ {
-		// fire off each philosopher's goroutine
-		go diningProblem(philosophers[i], wg, forks, seated)
-	}
-
-	// Wait for the philosophers to finish. This blocks until the wait group is 0.
-	wg.Wait()
-	fmt.Printf("Order finished: %s\n", strings.Join(orderFinished, ", "))
-	fmt.Println("The table is empty.")
 }
