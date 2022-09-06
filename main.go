@@ -34,18 +34,27 @@ var sleepTime = 1 * time.Second // how long to wait when printing things out
 var orderFinished []string      // the order in which philosophers finish dining and leave
 var orderMutex sync.Mutex       // a mutex for the slice orderFinished
 
+// diningProblem is the function fired off as a goroutine for each of our philosophers. It takes one
+// philosopher, our waitgroup to determine when everyone is done, a map containing the mutexes for every
+// fork on the table, and a waitgroup used to pause execution of every instance of this goroutine
+// until everyone is seated at the table.
 func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*sync.Mutex, seated *sync.WaitGroup) {
+	// decrement our waitgroup by one when this goroutine exits.
 	defer wg.Done()
 	fmt.Println(philosopher.name, "is seated at the table.")
+
+	// decrement the seated waitgroup by one.
 	seated.Done()
 
+	// wait until everyone is seated.
 	seated.Wait()
 
-	// we'll define a waitgroup for this goroutine specifically, so that the "leaving table"
-	// message does not get printed until after the message that the forks are dropped
+	// We'll also define a waitgroup for this goroutine specifically, so that the "leaving table"
+	// message does not get printed until after the message that the forks are dropped.
 	eating := &sync.WaitGroup{}
 	eating.Add(hunger)
 
+	// have this philosopher eat and think "hunger"" times (3).
 	for i := hunger; i > 0; i-- {
 		// get a lock on the left and right forks
 		forks[philosopher.leftFork].Lock()
