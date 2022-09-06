@@ -15,7 +15,7 @@ func Test_dine(t *testing.T) {
 	}
 }
 
-func Test_Main(t *testing.T) {
+func Test_main(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		orderFinished = []string{}
 		main()
