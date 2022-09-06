@@ -93,12 +93,12 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	// Wait until everyone is seated.
 	seated.Wait()
 
-	// We'll also define a waitgroup for this goroutine specifically, so that the "leaving table"
+	// We'll also define a WaitGroup for this goroutine specifically, so that the "leaving table"
 	// message does not get printed until after the message that the forks are dropped.
 	eating := &sync.WaitGroup{}
 	eating.Add(hunger)
 
-	// Have this philosopher eat and think "hunger"" times (3).
+	// Have this philosopher eat and think "hunger" times (3).
 	for i := hunger; i > 0; i-- {
 		// Get a lock on the left and right forks. We have to choose the lower numbered fork first in order
 		// to avoid a logical race condition, which is not detected by the -race flag in tests; if we don't do this,
