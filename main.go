@@ -100,8 +100,9 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 
 	// Have this philosopher eat and think "hunger"" times (3).
 	for i := hunger; i > 0; i-- {
-		// get a lock on the left and right forks. We have to choose the lower numbered fork first in order
-		// to avoid a logical race condition, which is not detected by the -race flag in tests.
+		// Get a lock on the left and right forks. We have to choose the lower numbered fork first in order
+		// to avoid a logical race condition, which is not detected by the -race flag in tests; if we don't do this,
+		// we have the potential for a deadlock, since two philosophers will wait endlessly for the same fork.
 		if philosopher.leftFork > philosopher.rightFork {
 			forks[philosopher.rightFork].Lock()
 			forks[philosopher.leftFork].Lock()
