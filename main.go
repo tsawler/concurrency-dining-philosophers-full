@@ -101,15 +101,6 @@ func main() {
 	seated.Add(len(philosophers))
 
 	// forks is a map of all 5 forks. Forks are assigned using the fields leftFork and rightFork in the Philosopher type.
-	// Yes, I know that I have a redundant type for each of the entries in the map, but I think it's just more readable.
-	// So sue me.
-	//forks := map[int]*sync.Mutex{
-	//	0: &sync.Mutex{},
-	//	1: &sync.Mutex{},
-	//	2: &sync.Mutex{},
-	//	3: &sync.Mutex{},
-	//	4: &sync.Mutex{},
-	//}
 	var forks = make(map[int]*sync.Mutex)
 	for i := 0; i < 5; i++ {
 		forks[i] = &sync.Mutex{}

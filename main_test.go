@@ -6,15 +6,27 @@ import (
 )
 
 func Test_main(t *testing.T) {
+	var theTests = []struct {
+		name  string
+		delay time.Duration
+	}{
+		{"zero delay", time.Second * 0},
+		{"half second delay", time.Millisecond * 500},
+		{"1 second delay", time.Second},
+	}
 	// set times to 0 to speed things along
-	eat = 0 * time.Second
-	sleepTime = 0 * time.Second
-	think = 0 * time.Second
 
-	// run the main function
-	main()
+	for _, e := range theTests {
+		orderFinished = []string{}
+		eat = e.delay
+		sleepTime = e.delay
+		think = 0 * e.delay
 
-	if len(orderFinished) != 5 {
-		t.Error("incorrect length of slice orderFinished")
+		// run the main function
+		main()
+
+		if len(orderFinished) != 5 {
+			t.Errorf("%s: incorrect length of slice orderFinished; expected 5 but got %d", e.name, len(orderFinished))
+		}
 	}
 }
