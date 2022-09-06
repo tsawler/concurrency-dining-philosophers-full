@@ -128,7 +128,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		eating.Done()
 	}
 
-	// wWit until all messages have been printed.
+	// Wait until all messages have been printed.
 	eating.Wait()
 
 	fmt.Println(philosopher.name, "is satisfied.")
