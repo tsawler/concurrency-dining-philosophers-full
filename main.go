@@ -93,10 +93,6 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	// Wait until everyone is seated.
 	seated.Wait()
 
-	// There is no need for the "eat" WaitGroup; I had a missing newline in a Printf, and the stdout stream is line
-	// buffered by default, and will only display what's in the buffer after it reaches a newline. At least I think
-	// that is what was going on...
-
 	// Have this philosopher eat and think "hunger" times (3).
 	for i := hunger; i > 0; i-- {
 		// Get a lock on the left and right forks. We have to choose the lower numbered fork first in order
