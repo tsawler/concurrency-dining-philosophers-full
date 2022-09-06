@@ -40,7 +40,7 @@ func Test_dine(t *testing.T) {
 	sleepTime = 0 * time.Second
 	think = 0 * time.Second
 
-	for k := 0; k < 1000; k++ {
+	for i := 0; i < 1000; i++ {
 		orderFinished = []string{}
 		dine()
 		if len(orderFinished) != 5 {
