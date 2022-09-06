@@ -48,9 +48,9 @@ func main() {
 
 func dine() {
 	// Uncomment the next three lines to set delays to zero while developing to speed things up.
-	eat = 0 * time.Second
-	sleepTime = 0 * time.Second
-	think = 0 * time.Second
+	//eat = 0 * time.Second
+	//sleepTime = 0 * time.Second
+	//think = 0 * time.Second
 
 	// wg is the waitgroup that keeps track of how many philosophers are still at the table. When
 	// it reaches zero, everyone is finished eating and has left. We add 5 (the number of philosophers) to this
