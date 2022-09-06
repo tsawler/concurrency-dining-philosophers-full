@@ -58,7 +58,7 @@ func dine() {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(philosophers))
 
-	// we want everyone to be seated before they start eating, so create a WaitGroup for that, and set it to 5.
+	// We want everyone to be seated before they start eating, so create a WaitGroup for that, and set it to 5.
 	seated := &sync.WaitGroup{}
 	seated.Add(len(philosophers))
 
