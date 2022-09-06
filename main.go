@@ -111,11 +111,11 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 			forks[philosopher.rightFork].Lock()
 		}
 
-		fmt.Println(philosopher.name, "has both forks, and is eating.")
+		fmt.Printf("\t%s has both forks, and is eating.\n", philosopher.name)
 		time.Sleep(eat)
 
 		// The philosopher starts to think, but does not drop the forks yet.
-		fmt.Printf("%s is thinking.\n", philosopher.name)
+		fmt.Printf("\t%s is thinking.\n", philosopher.name)
 		time.Sleep(think)
 
 		// Unlock the mutexes for both forks.
