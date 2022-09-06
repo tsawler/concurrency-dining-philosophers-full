@@ -16,7 +16,7 @@ type Philosopher struct {
 }
 
 // philosophers is our list of philosophers. We define their name, assign a left and right fork using ints that
-// match the map of forks. Note that each philosopher shares one fork with the person next to them (five philsophers,
+// match the map of forks. Note that each philosopher shares one fork with the person next to them (five philosophers,
 // and five forks).
 var philosophers = []Philosopher{
 	{name: "Plato", leftFork: 4, rightFork: 0},
@@ -26,7 +26,7 @@ var philosophers = []Philosopher{
 	{name: "Locke", leftFork: 3, rightFork: 4},
 }
 
-// define a few variables.
+// Define a few variables.
 var hunger = 3                  // how many times a philosopher eats
 var eat = 1 * time.Second       // how long it takes to eat
 var think = 3 * time.Second     // how long a philosopher thinks
@@ -52,13 +52,13 @@ func dine() {
 	//sleepTime = 0 * time.Second
 	//think = 0 * time.Second
 
-	// wg is the waitgroup that keeps track of how many philosophers are still at the table. When
+	// wg is the WaitGroup that keeps track of how many philosophers are still at the table. When
 	// it reaches zero, everyone is finished eating and has left. We add 5 (the number of philosophers) to this
 	// wait group.
 	wg := &sync.WaitGroup{}
 	wg.Add(len(philosophers))
 
-	// we want everyone to be seated before they start eating, so create a waitgroup for that, and set it to 5.
+	// we want everyone to be seated before they start eating, so create a WaitGroup for that, and set it to 5.
 	seated := &sync.WaitGroup{}
 	seated.Add(len(philosophers))
 
@@ -79,15 +79,15 @@ func dine() {
 }
 
 // diningProblem is the function fired off as a goroutine for each of our philosophers. It takes one
-// philosopher, our waitgroup to determine when everyone is done, a map containing the mutexes for every
-// fork on the table, and a waitgroup used to pause execution of every instance of this goroutine
+// philosopher, our WaitGroup to determine when everyone is done, a map containing the mutexes for every
+// fork on the table, and a WaitGroup used to pause execution of every instance of this goroutine
 // until everyone is seated at the table.
 func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*sync.Mutex, seated *sync.WaitGroup) {
-	// decrement our waitgroup by one when this goroutine exits.
+	// Decrement our WaitGroup by one when this goroutine exits.
 	defer wg.Done()
 	fmt.Println(philosopher.name, "is seated at the table.")
 
-	// Decrement the seated waitgroup by one.
+	// Decrement the seated WaitGroup by one.
 	seated.Done()
 
 	// Wait until everyone is seated.
@@ -124,7 +124,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 
 		fmt.Printf("\t%s put down the forks.\n", philosopher.name)
 
-		// Decrement the eating waitgroup by 1.
+		// Decrement the eating WaitGroup by 1.
 		eating.Done()
 	}
 
