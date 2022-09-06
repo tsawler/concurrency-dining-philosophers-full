@@ -42,7 +42,7 @@ func main() {
 
 	dine()
 
-	fmt.Printf("Order finished: %s\n", strings.Join(orderFinished, ", "))
+	fmt.Printf("Order finished: %s.\n", strings.Join(orderFinished, ", "))
 	fmt.Println("The table is empty.")
 }
 
