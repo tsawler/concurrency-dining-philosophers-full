@@ -95,8 +95,10 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 
 	// We'll also define a WaitGroup for this goroutine specifically, so that the "leaving table"
 	// message does not get printed until after the message that the forks are dropped.
-	eating := &sync.WaitGroup{}
-	eating.Add(hunger)
+	//eating := &sync.WaitGroup{}
+	//eating.Add(hunger)
+	// I think that I simply misread the output, since I can't duplicate the wrong order for output
+	// any more...
 
 	// Have this philosopher eat and think "hunger" times (3).
 	for i := hunger; i > 0; i-- {
@@ -105,10 +107,14 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		// we have the potential for a deadlock, since two philosophers will wait endlessly for the same fork.
 		if philosopher.leftFork > philosopher.rightFork {
 			forks[philosopher.rightFork].Lock()
+			fmt.Printf("\t%s takes the right fork.\n", philosopher.name)
 			forks[philosopher.leftFork].Lock()
+			fmt.Printf("\t%s takes the left fork.\n", philosopher.name)
 		} else {
 			forks[philosopher.leftFork].Lock()
+			fmt.Printf("\t%s takes the left fork.\n", philosopher.name)
 			forks[philosopher.rightFork].Lock()
+			fmt.Printf("\t%s takes the right fork.\n", philosopher.name)
 		}
 
 		fmt.Printf("\t%s has both forks, and is eating.\n", philosopher.name)
@@ -125,11 +131,11 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		fmt.Printf("\t%s put down the forks.\n", philosopher.name)
 
 		// Decrement the eating WaitGroup by 1.
-		eating.Done()
+		//eating.Done()
 	}
 
 	// Wait until all messages have been printed.
-	eating.Wait()
+	//eating.Wait()
 
 	fmt.Println(philosopher.name, "is satisfied.")
 	time.Sleep(sleepTime)

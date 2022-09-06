@@ -5,6 +5,26 @@ import (
 	"time"
 )
 
+func Test_dine(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		orderFinished = []string{}
+		dine()
+		if len(orderFinished) != 5 {
+			t.Errorf("incorrect length of slice orderFinished; expected 5 but got %d", len(orderFinished))
+		}
+	}
+}
+
+func Test_Main(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		orderFinished = []string{}
+		main()
+		if len(orderFinished) != 5 {
+			t.Errorf("incorrect length of slice orderFinished; expected 5 but got %d", len(orderFinished))
+		}
+	}
+}
+
 func Test_dineWithVaryingDelays(t *testing.T) {
 	var theTests = []struct {
 		name  string
@@ -31,30 +51,10 @@ func Test_dineWithVaryingDelays(t *testing.T) {
 		if len(orderFinished) != 5 {
 			t.Errorf("%s: incorrect length of slice orderFinished; expected 5 but got %d", e.name, len(orderFinished))
 		}
-	}
-}
 
-func Test_dine(t *testing.T) {
-	// Set all sleep times to 0 to speed things along.
-	eat = 0 * time.Second
-	sleepTime = 0 * time.Second
-	think = 0 * time.Second
-
-	for i := 0; i < 1000; i++ {
-		orderFinished = []string{}
-		dine()
-		if len(orderFinished) != 5 {
-			t.Errorf("incorrect length of slice orderFinished; expected 5 but got %d", len(orderFinished))
-		}
-	}
-}
-
-func Test_Main(t *testing.T) {
-	for i := 0; i < 1000; i++ {
-		orderFinished = []string{}
-		main()
-		if len(orderFinished) != 5 {
-			t.Errorf("incorrect length of slice orderFinished; expected 5 but got %d", len(orderFinished))
-		}
+		// clean up: set all sleep times to 0 to speed things along.
+		eat = 0 * time.Second
+		sleepTime = 0 * time.Second
+		think = 0 * time.Second
 	}
 }
