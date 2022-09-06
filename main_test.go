@@ -39,7 +39,7 @@ func Test_dineWithVaryingDelays(t *testing.T) {
 		// Set orderFinished to an empty slice of strings.
 		orderFinished = []string{}
 
-		// Set all sleep times to 0 to speed things along.
+		// Set all sleep times.
 		eat = e.delay
 		sleepTime = e.delay
 		think = e.delay
@@ -52,7 +52,7 @@ func Test_dineWithVaryingDelays(t *testing.T) {
 			t.Errorf("%s: incorrect length of slice orderFinished; expected 5 but got %d", e.name, len(orderFinished))
 		}
 
-		// clean up: set all sleep times to 0 to speed things along.
+		// Clean up: set all sleep times back to 0 to speed things along.
 		eat = 0 * time.Second
 		sleepTime = 0 * time.Second
 		think = 0 * time.Second

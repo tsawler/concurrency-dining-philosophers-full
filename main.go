@@ -15,7 +15,7 @@ type Philosopher struct {
 	leftFork  int
 }
 
-// philosophers is our list of philosophers. We define their name, assign a left and right fork using ints that
+// philosophers is our list of philosophers. We define their name, assign a left and right fork using integers which
 // match the map of forks. Note that each philosopher shares one fork with the person next to them (five philosophers,
 // and five forks).
 var philosophers = []Philosopher{
@@ -93,12 +93,9 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	// Wait until everyone is seated.
 	seated.Wait()
 
-	// We'll also define a WaitGroup for this goroutine specifically, so that the "leaving table"
-	// message does not get printed until after the message that the forks are dropped.
-	//eating := &sync.WaitGroup{}
-	//eating.Add(hunger)
-	// I think that I simply misread the output, since I can't duplicate the wrong order for output
-	// anymore...
+	// There is no need for the "eat" WaitGroup; I had a missing newline in a Printf, and the stdout stream is line
+	// buffered by default, and will only display what's in the buffer after it reaches a newline. At least I think
+	// that is what was going on...
 
 	// Have this philosopher eat and think "hunger" times (3).
 	for i := hunger; i > 0; i-- {
@@ -129,13 +126,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		forks[philosopher.rightFork].Unlock()
 
 		fmt.Printf("\t%s put down the forks.\n", philosopher.name)
-
-		// Decrement the eating WaitGroup by 1.
-		//eating.Done()
 	}
-
-	// Wait until all messages have been printed.
-	//eating.Wait()
 
 	fmt.Println(philosopher.name, "is satisfied.")
 	time.Sleep(sleepTime)
