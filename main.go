@@ -83,7 +83,9 @@ func dine() {
 		forks[i] = &sync.Mutex{}
 	}
 
-	// Start the meal by iterating through our slice of Philosophers.
+	// Start the meal by iterating through our slice of Philosophers. Note that the meail does not actually
+	// start until everyone is seated at the table because the diningProblem function uses the seated WaitGroup
+	// to pause until everyone is seated.
 	for i := 0; i < len(philosophers); i++ {
 		// fire off each philosopher's goroutine
 		go diningProblem(philosophers[i], wg, forks, seated)
