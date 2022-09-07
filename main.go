@@ -76,7 +76,8 @@ func dine() {
 	seated := &sync.WaitGroup{}
 	seated.Add(len(philosophers))
 
-	// forks is a map of all 5 forks. Forks are assigned using the fields leftFork and rightFork in the Philosopher type.
+	// forks is a map of all 5 forks. Forks are assigned using the fields leftFork and rightFork in the Philosopher
+	// type. Each fork, then, can be found using the index (an integer), and each fork has a unique mutex.
 	var forks = make(map[int]*sync.Mutex)
 	for i := 0; i < 5; i++ {
 		forks[i] = &sync.Mutex{}
