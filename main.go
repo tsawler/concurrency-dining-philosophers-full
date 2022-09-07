@@ -40,10 +40,10 @@ var philosophers = []Philosopher{
 
 // Define a few variables.
 var hunger = 3                  // how many times a philosopher eats
-var eat = 1 * time.Second       // how long it takes to eat
-var think = 3 * time.Second     // how long a philosopher thinks
+var eatTime = 1 * time.Second   // how long it takes to eatTime
+var thinkTime = 3 * time.Second // how long a philosopher thinks
 var sleepTime = 1 * time.Second // how long to wait when printing things out
-var orderMutex sync.Mutex       // a mutex for the slice orderFinished
+var orderMutex sync.Mutex       // a mutex for the slice orderFinished; part of challenge!
 var orderFinished []string      // the order in which philosophers finish dining and leave; part of challenge!
 
 func main() {
@@ -62,9 +62,9 @@ func main() {
 
 func dine() {
 	// Uncomment the next three lines to set delays to zero while developing to speed things up.
-	//eat = 0 * time.Second
+	//eatTime = 0 * time.Second
 	//sleepTime = 0 * time.Second
-	//think = 0 * time.Second
+	//thinkTime = 0 * time.Second
 
 	// wg is the WaitGroup that keeps track of how many philosophers are still at the table. When
 	// it reaches zero, everyone is finished eating and has left. We add 5 (the number of philosophers) to this
@@ -110,7 +110,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	// Wait until everyone is seated.
 	seated.Wait()
 
-	// Have this philosopher eat and think "hunger" times (3).
+	// Have this philosopher eatTime and thinkTime "hunger" times (3).
 	for i := hunger; i > 0; i-- {
 		// Get a lock on the left and right forks. We have to choose the lower numbered fork first in order
 		// to avoid a logical race condition, which is not detected by the -race flag in tests; if we don't do this,
@@ -132,11 +132,11 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 
 		// By the time we get to this line, the philosopher has a lock (mutex) on both forks.
 		fmt.Printf("\t%s has both forks, and is eating.\n", philosopher.name)
-		time.Sleep(eat)
+		time.Sleep(eatTime)
 
-		// The philosopher starts to think, but does not drop the forks yet.
+		// The philosopher starts to thinkTime, but does not drop the forks yet.
 		fmt.Printf("\t%s is thinking.\n", philosopher.name)
-		time.Sleep(think)
+		time.Sleep(thinkTime)
 
 		// Unlock the mutexes for both forks.
 		forks[philosopher.leftFork].Unlock()

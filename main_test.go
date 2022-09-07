@@ -7,9 +7,9 @@ import (
 
 func Test_dine(t *testing.T) {
 	// Set all sleep times to 0 to speed things along.
-	eat = 0 * time.Second
+	eatTime = 0 * time.Second
 	sleepTime = 0 * time.Second
-	think = 0 * time.Second
+	thinkTime = 0 * time.Second
 
 	for i := 0; i < 10; i++ {
 		orderFinished = []string{}
@@ -35,9 +35,9 @@ func Test_dineWithVaryingDelays(t *testing.T) {
 		orderFinished = []string{}
 
 		// Set all sleep times.
-		eat = e.delay
+		eatTime = e.delay
 		sleepTime = e.delay
-		think = e.delay
+		thinkTime = e.delay
 
 		// Run the dine function.
 		dine()
