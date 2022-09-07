@@ -116,11 +116,13 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		// to avoid a logical race condition, which is not detected by the -race flag in tests; if we don't do this,
 		// we have the potential for a deadlock, since two philosophers will wait endlessly for the same fork.
 		if philosopher.leftFork > philosopher.rightFork {
+			// This case will only apply to Plato.
 			forks[philosopher.rightFork].Lock()
 			fmt.Printf("\t%s takes the right fork.\n", philosopher.name)
 			forks[philosopher.leftFork].Lock()
 			fmt.Printf("\t%s takes the left fork.\n", philosopher.name)
 		} else {
+			// This case applies to everyone else.
 			forks[philosopher.leftFork].Lock()
 			fmt.Printf("\t%s takes the left fork.\n", philosopher.name)
 			forks[philosopher.rightFork].Lock()
