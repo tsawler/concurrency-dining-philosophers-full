@@ -115,6 +115,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		// Get a lock on the left and right forks. We have to choose the lower numbered fork first in order
 		// to avoid a logical race condition, which is not detected by the -race flag in tests; if we don't do this,
 		// we have the potential for a deadlock, since two philosophers will wait endlessly for the same fork.
+		// Note that the goroutine will block (pause) until it gets a lock on both the right and left forks.
 		if philosopher.leftFork > philosopher.rightFork {
 			// This case will only apply to Plato.
 			forks[philosopher.rightFork].Lock()
@@ -129,6 +130,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 			fmt.Printf("\t%s takes the right fork.\n", philosopher.name)
 		}
 
+		// By the time we get to this line, the philosopher has a lock (mutex) on both forks.
 		fmt.Printf("\t%s has both forks, and is eating.\n", philosopher.name)
 		time.Sleep(eat)
 
@@ -143,6 +145,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		fmt.Printf("\t%s put down the forks.\n", philosopher.name)
 	}
 
+	// The philosopher has finished eating, so print out a message.
 	fmt.Println(philosopher.name, "is satisfied.")
 	time.Sleep(sleepTime)
 	fmt.Println(philosopher.name, "left the table.")
