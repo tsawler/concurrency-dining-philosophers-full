@@ -7,7 +7,7 @@ package main
 // served is a very difficult kind of spaghetti which has to be eaten with
 // two forks. There are two forks next to each plate, so that presents no
 // difficulty. As a consequence, however, this means that no two neighbours
-// may be eating simultaneously.
+// may be eating simultaneously, since there are five philosophers and five forks.
 //
 // This is a simple implementation of Dijkstra's solution to the "Dining
 // Philosophers" dilemma.
