@@ -85,7 +85,7 @@ func dine() {
 func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*sync.Mutex, seated *sync.WaitGroup) {
 	// Decrement our WaitGroup by one when this goroutine exits.
 	defer wg.Done()
-	fmt.Println(philosopher.name, "is seated at the table.")
+	fmt.Printf("%s is seated at the table.\n", philosopher.name)
 
 	// Decrement the seated WaitGroup by one.
 	seated.Done()
