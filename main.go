@@ -31,8 +31,8 @@ var hunger = 3                  // how many times a philosopher eats
 var eat = 1 * time.Second       // how long it takes to eat
 var think = 3 * time.Second     // how long a philosopher thinks
 var sleepTime = 1 * time.Second // how long to wait when printing things out
-var orderFinished []string      // the order in which philosophers finish dining and leave
 var orderMutex sync.Mutex       // a mutex for the slice orderFinished
+var orderFinished []string      // the order in which philosophers finish dining and leave; part of challenge!
 
 func main() {
 	fmt.Println("Dining Philosophers Problem")
@@ -42,7 +42,9 @@ func main() {
 
 	dine()
 
+	// part of challenge!
 	fmt.Printf("Order finished: %s.\n", strings.Join(orderFinished, ", "))
+
 	fmt.Println("The table is empty.")
 }
 
@@ -128,7 +130,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 	time.Sleep(sleepTime)
 	fmt.Println(philosopher.name, "left the table.")
 
-	// Update the list of finished diners.
+	// Update the list of finished diners. Part of challenge!
 	orderMutex.Lock()
 	orderFinished = append(orderFinished, philosopher.name)
 	orderMutex.Unlock()
