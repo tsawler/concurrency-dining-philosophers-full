@@ -12,3 +12,5 @@ since there are five philosophers and five forks.
 
 This is a simple implementation of Dijkstra's solution to the 
 "Dining Philosophers" problem. 
+
+You can read more about this problem [on Wikipedia](https://en.wikipedia.org/wiki/Dining_philosophers_problem).
