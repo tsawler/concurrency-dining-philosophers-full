@@ -117,7 +117,7 @@ func diningProblem(philosopher Philosopher, wg *sync.WaitGroup, forks map[int]*s
 		// we have the potential for a deadlock, since two philosophers will wait endlessly for the same fork.
 		// Note that the goroutine will block (pause) until it gets a lock on both the right and left forks.
 		if philosopher.leftFork > philosopher.rightFork {
-			// This case will only apply to Plato.
+			// This case will only apply to Plato, who has left fork 4 and right fork 0.
 			forks[philosopher.rightFork].Lock()
 			fmt.Printf("\t%s takes the right fork.\n", philosopher.name)
 			forks[philosopher.leftFork].Lock()
