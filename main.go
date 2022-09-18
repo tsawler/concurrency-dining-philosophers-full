@@ -47,14 +47,16 @@ var orderMutex sync.Mutex       // a mutex for the slice orderFinished; part of 
 var orderFinished []string      // the order in which philosophers finish dining and leave; part of challenge!
 
 func main() {
+	// Print out welcome.
 	fmt.Println("Dining Philosophers Problem")
 	fmt.Println("---------------------------")
 	fmt.Println("The table is empty.")
 	time.Sleep(sleepTime)
 
+	// Start the meal.
 	dine()
 
-	// part of challenge!
+	// Print out order finished. Part of challenge!
 	fmt.Printf("Order finished: %s.\n", strings.Join(orderFinished, ", "))
 
 	fmt.Println("The table is empty.")
