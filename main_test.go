@@ -5,21 +5,6 @@ import (
 	"time"
 )
 
-func Test_dine(t *testing.T) {
-	// Set all sleep times to 0 to speed things along.
-	eatTime = 0 * time.Second
-	sleepTime = 0 * time.Second
-	thinkTime = 0 * time.Second
-
-	for i := 0; i < 10; i++ {
-		orderFinished = []string{}
-		dine()
-		if len(orderFinished) != 5 {
-			t.Errorf("incorrect length of slice orderFinished; expected 5 but got %d", len(orderFinished))
-		}
-	}
-}
-
 func Test_dineWithVaryingDelays(t *testing.T) {
 	var theTests = []struct {
 		name  string
